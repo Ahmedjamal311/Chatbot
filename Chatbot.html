@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paint & Rollers FAQ Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+
+    #chatToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+    }
+
+    #chatWindow {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      max-height: 500px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+      background: white;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #chatHeader {
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #closeChat {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #chatbox {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+
+    .bot {
+      color: #2c3e50;
+      background: #ecf0f1;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+
+    .user {
+      color: white;
+      background: #007bff;
+      padding: 8px;
+      margin: 6px 0;
+      border-radius: 8px;
+      max-width: 80%;
+      margin-left: auto;
+    }
+
+    #inputArea {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    #userInput {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #send {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    #send:hover {
+      background: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="chatToggle">💬</button>
+
+  <div id="chatWindow">
+    <div id="chatHeader">
+      Paint & Rollers FAQ Bot
+      <button id="closeChat">✖</button>
+    </div>
+    <div id="chatbox"></div>
+    <div id="inputArea">
+      <input type="text" id="userInput" placeholder="Type your message...">
+      <button id="send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatToggle = document.getElementById("chatToggle");
+    const chatWindow = document.getElementById("chatWindow");
+    const closeChat = document.getElementById("closeChat");
+    const chatbox = document.getElementById("chatbox");
+    const input = document.getElementById("userInput");
+    const sendBtn = document.getElementById("send");
+
+    chatToggle.addEventListener("click", () => {
+      chatWindow.style.display = "flex";
+      chatToggle.style.display = "none";
+    });
+
+    closeChat.addEventListener("click", () => {
+      chatWindow.style.display = "none";
+      chatToggle.style.display = "block";
+    });
+
+    function addMessage(sender, text) {
+      let message = document.createElement("div");
+      message.className = sender;
+      message.textContent = text;
+      chatbox.appendChild(message);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function botReply(userMsg) {
+      let response = "Sorry, I didn’t quite get that. Could you try again?";
+
+      if (userMsg.includes("hello") || userMsg.includes("hi")) {
+        response = "Hello! Welcome to Paint & Rollers 🎨. How can I help you today?";
+      }
+      else if (userMsg.includes("paint")) {
+        response = "We carry interior and exterior paints in matte, satin, semi-gloss, and gloss finishes.";
+      }
+      else if (userMsg.includes("roller")) {
+        response = "We stock rollers for smooth, semi-rough, and rough surfaces.";
+      }
+      else if (userMsg.includes("brush")) {
+        response = "We have brushes for trim, walls, and specialty finishes.";
+      }
+      else if (userMsg.includes("hours") || userMsg.includes("open")) {
+        response = "Our store is open Mon–Sat: 9am to 8pm, and Sun: 10am to 6pm.";
+      }
+      else if (userMsg.includes("location") || userMsg.includes("where")) {
+        response = "You can find us at 123 Main Street, Cincinnati, OH.";
+      }
+      else if (userMsg.includes("delivery") || userMsg.includes("shipping")) {
+        response = "Yes! We offer local delivery and nationwide shipping.";
+      }
+      else if (userMsg.includes("bye")) {
+        response = "Thanks for visiting Paint & Rollers! Have a colorful day 🌈";
+      }
+
+      setTimeout(() => addMessage("bot", response), 500);
+    }
+
+    sendBtn.addEventListener("click", () => {
+      const userMsg = input.value.trim().toLowerCase();
+      if (userMsg) {
+        addMessage("user", input.value);
+        botReply(userMsg);
+        input.value = "";
+      }
+    });
+
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendBtn.click();
+    });
+  </script>
+
+</body>
+</html>
