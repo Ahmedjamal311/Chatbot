@@ -28,7 +28,7 @@
       right: 20px;
       width: 350px;
       max-height: 500px;
-      border-radius: 10px;
+      border-radius: 16px;
       box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
       background: white;
       display: none;
@@ -37,13 +37,15 @@
     }
 
     #chatHeader {
-      background: #007bff;
-      color: white;
-      padding: 12px;
-      font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+       background: #007bff;
+       color: white;
+       padding: 12px;
+       font-weight: bold;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       border-top-left-radius: 16px;
+       border-top-right-radius: 16px;
     }
 
     #closeChat {
@@ -88,9 +90,16 @@
 
     #userInput {
       flex: 1;
-      border: none;
+      border: 1px solid #ccc;
+      border-radius: 16px;        
       padding: 10px;
       font-size: 14px;
+      margin: 6px;                
+      outline: none;             
+    }
+
+    #userInput:focus {
+      border-color: #007bff;     
     }
 
     #send {
